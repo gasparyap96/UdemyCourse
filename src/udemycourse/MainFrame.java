@@ -2,12 +2,11 @@ package udemycourse;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class MainFrame extends JFrame{
     
-    private JButton btn_Click;
     private TextPanel textPanel;
+    private ToolBar toolBar;
     
     public MainFrame() {
         //set Frame windows name
@@ -16,18 +15,14 @@ public class MainFrame extends JFrame{
         //set Frame Layout
         setLayout(new BorderLayout());
         
-        btn_Click = new JButton("Click Me");
         textPanel = new TextPanel();
+        toolBar = new ToolBar();
         
-        btn_Click.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                textPanel.appendText("Hello\n");
-            }
-        });
+        //pass text panel to toolbar
+        toolBar.setTextPanel(textPanel);
         
+        add(toolBar, BorderLayout.NORTH);
         add(textPanel, BorderLayout.CENTER);
-        add(btn_Click, BorderLayout.SOUTH);
         
         //Frame setting
         setVisible(true);
