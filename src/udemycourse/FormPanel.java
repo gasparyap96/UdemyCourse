@@ -10,6 +10,7 @@ public class FormPanel extends JPanel{
     private JLabel lblName, lblOccupation;
     private JTextField txtName, txtOccupation;
     private JButton btnSubmit;
+    private FormListener formListener;
     
     public FormPanel() {
         //Resize the form panel
@@ -34,6 +35,14 @@ public class FormPanel extends JPanel{
             public void actionPerformed(ActionEvent e) {
                 String name = txtName.getText();
                 String occupation = txtOccupation.getText();
+                
+                FormEvent event = new FormEvent(this, name, occupation);
+                
+                if(formListener != null) {
+                    formListener.formEvent(event);
+                    txtName.setText("");
+                    txtOccupation.setText("");
+                }
             }
         });
         
@@ -99,5 +108,9 @@ public class FormPanel extends JPanel{
         gc.anchor = GridBagConstraints.FIRST_LINE_START;
         //add button
         add(btnSubmit, gc);
+    }
+    
+    public void setFormListener(FormListener listener) {
+        this.formListener = listener;
     }
 }
