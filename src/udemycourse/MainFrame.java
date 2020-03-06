@@ -7,6 +7,7 @@ public class MainFrame extends JFrame{
     
     private TextPanel textPanel;
     private ToolBar toolBar;
+    private FormPanel formPanel;
     
     public MainFrame() {
         //set Frame windows name
@@ -17,6 +18,7 @@ public class MainFrame extends JFrame{
         
         textPanel = new TextPanel();
         toolBar = new ToolBar();
+        formPanel = new FormPanel();
         
         //pass text panel to toolbar
         toolBar.setStringListener(new StringListener() {
@@ -27,6 +29,7 @@ public class MainFrame extends JFrame{
             }
         });
         
+        add(formPanel, BorderLayout.WEST);
         add(toolBar, BorderLayout.NORTH);
         add(textPanel, BorderLayout.CENTER);
         
