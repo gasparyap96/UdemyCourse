@@ -11,6 +11,7 @@ public class FormPanel extends JPanel{
     private JTextField txtName, txtOccupation;
     private JButton btnSubmit;
     private FormListener formListener;
+    private JList ageList;
     
     public FormPanel() {
         //Resize the form panel
@@ -26,6 +27,17 @@ public class FormPanel extends JPanel{
         lblOccupation = new JLabel("Occupation: ");
         txtName = new JTextField(13);
         txtOccupation = new JTextField(13);
+        ageList = new JList();
+        
+        DefaultListModel ageModel = new DefaultListModel();
+        ageModel.addElement(new AgeCategory(0, "Under 18"));
+        ageModel.addElement(new AgeCategory(1, "18 to 65"));
+        ageModel.addElement(new AgeCategory(2, "66 and Above"));
+        ageList.setModel(ageModel);
+        
+        ageList.setPreferredSize(new Dimension(100,66));
+        ageList.setBorder(BorderFactory.createEtchedBorder());
+        ageList.setSelectedIndex(0);
         
         btnSubmit = new JButton("Submit");
         
@@ -35,8 +47,9 @@ public class FormPanel extends JPanel{
             public void actionPerformed(ActionEvent e) {
                 String name = txtName.getText();
                 String occupation = txtOccupation.getText();
+                AgeCategory ageCat = (AgeCategory)ageList.getSelectedValue();
                 
-                FormEvent event = new FormEvent(this, name, occupation);
+                FormEvent event = new FormEvent(this, name, occupation, ageCat.getId());
                 
                 if(formListener != null) {
                     formListener.formEvent(event);
@@ -56,7 +69,7 @@ public class FormPanel extends JPanel{
         //////////////////// FIRST ROW ////////////////////
         
         gc.weightx = 1.0;
-        gc.weighty = 0.1; //Let the 上下宽度比较小
+        gc.weighty = 0.3; //Let the 上下宽度比较小
         
         //This is for name label setting
         gc.gridx = 0; //this mean first of the col
@@ -78,7 +91,7 @@ public class FormPanel extends JPanel{
         //////////////////// SECOND ROW ////////////////////
         
         gc.weightx = 1.0;
-        gc.weighty = 0.1;
+        gc.weighty = 0.3;
         
         //occupation label setting
         gc.gridx = 0;
@@ -96,14 +109,27 @@ public class FormPanel extends JPanel{
         //add occupation text field
         add(txtOccupation, gc);
         
-        //////////////////// THIRD ROW ////////////////////
+        //////////////////// Third ROW ////////////////////
+        
+        gc.weightx = 1.0;
+        gc.weighty = 0.3;
+        
+        //button setting
+        gc.gridx = 1; //put in the 2nd column, so the button will be centered
+        gc.gridy = 2;
+        gc.insets = new Insets(0, 0, 0, 0);
+        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+        //Add Jlist
+        add(ageList, gc);
+        
+        //////////////////// FOURTH ROW ////////////////////
         
         gc.weightx = 1.0;
         gc.weighty = 1.0;
         
         //button setting
         gc.gridx = 1; //put in the 2nd column, so the button will be centered
-        gc.gridy = 2;
+        gc.gridy = 3;
         gc.insets = new Insets(0, 0, 0, 0);
         gc.anchor = GridBagConstraints.FIRST_LINE_START;
         //add button
@@ -112,5 +138,24 @@ public class FormPanel extends JPanel{
     
     public void setFormListener(FormListener listener) {
         this.formListener = listener;
+    }
+}
+
+class AgeCategory {
+    
+    private int id;
+    private String text;
+    
+    public AgeCategory(int id, String text) {
+        this.id = id;
+        this.text = text;
+    }
+    
+    public String toString() {
+        return text;
+    }
+    
+    public int getId() {
+        return id;
     }
 }
