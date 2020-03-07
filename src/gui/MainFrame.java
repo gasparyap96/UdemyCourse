@@ -1,4 +1,4 @@
-package udemycourse;
+package gui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +20,9 @@ public class MainFrame extends JFrame{
         toolBar = new ToolBar();
         formPanel = new FormPanel();
         
+        //Set menubar
+        setJMenuBar(createMenuBar());
+        
         //pass text panel to toolbar
         toolBar.setStringListener(new StringListener() {
             
@@ -36,8 +39,10 @@ public class MainFrame extends JFrame{
                 String name = e.getName();
                 String occupation = e.getOccupation();
                 int ageCat = e.getAgeID();
+                String empCat = e.getEmployment();
                 
-                textPanel.appendText(name + " : " + occupation + ":" + ageCat +"\n");
+                textPanel.appendText(name + " : " + occupation + ":" + ageCat +
+                                     ":" + empCat +"\n");
             }
         });
         
@@ -50,5 +55,37 @@ public class MainFrame extends JFrame{
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500,500);
+    }
+    
+    private JMenuBar createMenuBar() {
+        JMenuBar menuBar = new JMenuBar();
+        
+        //New menu
+        JMenu fileMenu = new JMenu("File");
+        JMenu windowMenu = new JMenu("Window");
+        JMenu showMenu = new JMenu("Show");
+        
+        //Item inside Menu
+        JMenuItem exportDataItem = new JMenuItem("Export Data");
+        JMenuItem importDataItem = new JMenuItem("Import Data");
+        JMenuItem exitItem = new JMenuItem("Exit");
+        //showMenu
+        JMenuItem showFormItem = new JMenuItem("Person Form");
+        
+        //Add item to menu
+        fileMenu.add(exportDataItem);
+        fileMenu.add(importDataItem);
+        fileMenu.addSeparator();
+        fileMenu.add(exitItem);
+        //Showmenu
+        showMenu.add(showFormItem);
+        //window menu
+        windowMenu.add(showMenu);
+        
+        //Add menu to menu bar
+        menuBar.add(fileMenu);
+        menuBar.add(windowMenu);
+        
+        return menuBar;
     }
 }

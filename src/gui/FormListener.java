@@ -1,4 +1,4 @@
-package udemycourse;
+package gui;
 
 import java.util.*;
 
