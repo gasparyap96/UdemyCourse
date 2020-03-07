@@ -2,12 +2,14 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import controller.Controller;
 
 public class MainFrame extends JFrame{
     
     private TextPanel textPanel;
     private ToolBar toolBar;
     private FormPanel formPanel;
+    private Controller controller;
     
     public MainFrame() {
         //set Frame windows name
@@ -19,6 +21,8 @@ public class MainFrame extends JFrame{
         textPanel = new TextPanel();
         toolBar = new ToolBar();
         formPanel = new FormPanel();
+        
+        controller = new Controller();
         
         //Set menubar
         setJMenuBar(createMenuBar());
@@ -36,14 +40,9 @@ public class MainFrame extends JFrame{
             
             @Override
             public void formEvent(FormEvent e) {
-                String name = e.getName();
-                String occupation = e.getOccupation();
-                int ageCat = e.getAgeID();
-                String empCat = e.getEmployment();
-                
-                textPanel.appendText(name + " : " + occupation + ":" + ageCat +
-                                     ":" + empCat +"\n");
+                controller.addPerson(e);
             }
+            
         });
         
         add(formPanel, BorderLayout.WEST);
